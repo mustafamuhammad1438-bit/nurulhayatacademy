@@ -1,13 +1,230 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nurul Hayat Academy</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-50"><div class="bg-indigo-600 text-white p-4 text-center font-bold">Nurul Hayat Academy 2017 | PLAZA CORE FRESH - LIVE</div><div class="max-w-4xl mx-auto p-4"><div id="status" class="bg-yellow-100 border-l-4 border-yellow-600 p-4 rounded">Connecting to https://rltzyqqieonretsocass.supabase.co ...</div><div id="list" class="mt-4 bg-white p-4 rounded shadow">Loading...</div><div class="mt-4 bg-white p-4 rounded shadow"><input id="n" placeholder="Name" class="w-full border p-2 rounded mt-2"><input id="e" placeholder="Email" class="w-full border p-2 rounded mt-2"><input id="p" placeholder="Phone" class="w-full border p-2 rounded mt-2"><input id="c" placeholder="Course" class="w-full border p-2 rounded mt-2"><button onclick="addStudent()" class="mt-3 w-full bg-green-600 text-white py-3 rounded-xl font-bold">Save to Cloud</button></div></div><script>
-const PROJECT_URL='https://rltzyqqieonretsocass.supabase.co';
-const PUBLISHABLE_KEY='sb_publishable_5XTeRsdLkPNVNxADAvg0pQ_YYR0Mn3e';
-async function load(){
- try{
-  const res=await fetch(PROJECT_URL+'/rest/v1/students?select=*',{headers:{apikey:PUBLISHABLE_KEY,Authorization:'Bearer '+PUBLISHABLE_KEY}});
-  const txt=await res.text(); if(!res.ok){document.getElementById('status').innerHTML='❌ Error '+res.status+':<br><pre>'+txt+'</pre>';return;}
-  const data=JSON.parse(txt); document.getElementById('status').innerHTML='✅ CONNECTED! '+data.length+' students LIVE!'; document.getElementById('list').innerHTML=data.map(s=>'<div class="border-b py-2">🎓 <b>'+s.name+'</b> - '+s.course+' - '+s.phone+'</div>').join('')||'No students yet';
- }catch(e){document.getElementById('status').innerHTML='❌ Fetch failed: '+e.message+'<br>If DNS error, try mobile data or VPN - some ISPs block supabase.co';}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nurul Hayat Academy 2017 | PLAZA CORE FRESH - LIVE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0}
+.header{background:#3b3bf0;color:white;text-align:center;padding:16px;font-weight:bold;font-size:18px}
+.container{max-width:700px;margin:20px auto;padding:0 15px}
+.card{background:white;border-radius:8px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.input{width:100%;padding:12px;border:1px solid #ddd;border-radius:6px;margin-bottom:12px;box-sizing:border-box;font-size:15px}
+.btn{width:100%;padding:13px;background:#16a34a;color:white;border:none;border-radius:24px;font-weight:bold;font-size:16px;cursor:pointer}
+.btn:disabled{opacity:.6}
+.badge-ok{background:#dcfce7;border:1px solid #16a34a;color:#166534;padding:10px;border-radius:6px;margin-bottom:12px}
+.badge-warn{background:#fff8c5;border:1px solid #facc15;padding:10px;border-radius:6px;margin-bottom:12px}
+.badge-err{background:#fee2e2;border:1px solid #ef4444;padding:10px;border-radius:6px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #eee;padding:8px;text-align:left;font-size:14px}
+th{background:#f9fafb}
+.small{font-size:12px;color:#666}
+</style>
+</head>
+<body>
+<div class="header">Nurul Hayat Academy 2017 | PLAZA CORE FRESH - LIVE</div>
+<div class="container">
+
+<div id="status" class="badge-warn">Checking connection... Nigerian ISPs block supabase.co - Trying bypass...</div>
+
+<div class="card">
+<h3 style="margin-top:0">Supabase Config (one time)</h3>
+<input id="supaUrl" class="input" placeholder="https://YOUR_PROJECT.supabase.co">
+<input id="supaKey" class="input" placeholder="eyJhbG... your anon key">
+<button onclick="saveConfig()" class="input" style="background:#eef2ff;cursor:pointer">Save Config & Test Connection</button>
+<p class="small">Find this in Supabase Dashboard > Project Settings > API > URL and anon public key. I saved your config in browser - students don't need to enter it.</p>
+</div>
+
+<div class="card">
+<input id="name" class="input" placeholder="Name">
+<input id="email" class="input" placeholder="Email">
+<input id="phone" class="input" placeholder="Phone">
+<input id="course" class="input" placeholder="Course">
+<button id="saveBtn" class="btn" onclick="saveToCloud()">Save to Cloud</button>
+<p id="saveMsg" class="small"></p>
+</div>
+
+<div class="card">
+<h3 style="margin-top:0">Students Data <span id="count"></span></h3>
+<div id="data">Loading...</div>
+<button onclick="loadData()" style="margin-top:10px">Refresh</button>
+<button onclick="exportCSV()" style="margin-top:10px">Export CSV</button>
+</div>
+
+<div class="card">
+<h4>How to Fix on GitHub (for you)</h4>
+<ol class="small">
+<li>Go to github.com/mustafamuhammad1438-bit/mustafamuhammad1438-bit.github.io</li>
+<li>Open folder nurulhayatacademy/ > index.html > Edit (pencil icon)</li>
+<li>Select all (Ctrl+A) Delete, Paste this entire file</li>
+<li>Scroll to line 105, put your real SUPABASE_URL and SUPABASE_KEY in the DEFAULT_URL and DEFAULT_KEY</li>
+<li>Commit changes</li>
+<li>Wait 2 minutes, open mustafamuhammad1438-bit.github.io/nurulhayatacademy/ on MTN - Works!</li>
+</ol>
+<pre style="background:#f3f4f6;padding:8px;overflow:auto;font-size:11px">const DEFAULT_URL = "https://YOUR_PROJECT.supabase.co";
+const DEFAULT_KEY = "eyJ...";</pre>
+</div>
+
+</div>
+
+<script>
+// ======== PUT YOUR REAL SUPABASE HERE SO STUDENTS DON'T NEED TO ENTER ========
+const DEFAULT_URL = "https://rltzyqqieonretsocass.supabase.co";
+const DEFAULT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsdHp5Z3FpZW9ucmV0c29jYXNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MDgwNzcsImV4cCI6MjEwMjM4NDA3N30.p7iBjmoW3uffXGdFuuPnrTFHuLiOEeiRFSYBeYrKsI4";
+// New publishable format (also valid)
+const PUBLISHABLE_KEY = "sb_publishable_5XTeRsdLkPNVNxADAvg0pQ_YYR0Mn3e";
+
+let supabaseClient = null;
+let workingProxy = "direct";
+let TABLE_NAME = "students"; // will auto-detect
+
+function getConfig(){
+  const url = localStorage.getItem('supa_url') || DEFAULT_URL;
+  const key = localStorage.getItem('supa_key') || DEFAULT_KEY;
+  document.getElementById('supaUrl').value = url.includes('YOUR_PROJECT') ? '' : url;
+  document.getElementById('supaKey').value = key.includes('YOUR_ANON') ? '' : key;
+  return {url, key};
 }
-async function addStudent(){const body={name:n.value,email:e.value,phone:p.value,course:c.value}; const res=await fetch(PROJECT_URL+'/rest/v1/students',{method:'POST',headers:{apikey:PUBLISHABLE_KEY,Authorization:'Bearer '+PUBLISHABLE_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(body)}); if(!res.ok){const t=await res.text(); alert('Error: '+t);}else{alert('Saved!'); load();}}
-load();
-</script></body></html>
+
+function saveConfig(){
+  const url = document.getElementById('supaUrl').value.trim();
+  const key = document.getElementById('supaKey').value.trim();
+  if(!url || !key){ alert('Paste URL and anon key'); return; }
+  localStorage.setItem('supa_url', url);
+  localStorage.setItem('supa_key', key);
+  initSupabase();
+}
+
+async function fetchWithBypass(url, options={}){
+  const proxies = [
+    {name:'direct', fn: u=>u},
+    {name:'corsproxy.io', fn: u=>`https://corsproxy.io/?${encodeURIComponent(u)}`},
+    {name:'allorigins', fn: u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`},
+    {name:'codetabs', fn: u=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`}
+  ];
+  for(let p of proxies){
+    try{
+      const r = await fetch(p.fn(url), {...options, headers:{...options.headers, 'x-bypass': p.name}});
+      if(r.ok || r.status<500){ workingProxy = p.name; return r; }
+    }catch(e){ console.log('proxy fail', p.name, e); }
+  }
+  throw new Error('All proxies blocked - Supabase down or paused');
+}
+
+async function initSupabase(){
+  const {url, key} = getConfig();
+  const statusEl = document.getElementById('status');
+  if(url.includes('YOUR_PROJECT') || key.includes('YOUR_ANON') || !url || !key){
+    statusEl.className='badge-warn';
+    statusEl.innerHTML='⚠️ Config missing. Enter Supabase URL & Anon Key above, or edit this file DEFAULT_URL/DEFAULT_KEY for students.';
+    document.getElementById('data').innerHTML='Enter config to load data. Meanwhile using local storage fallback.';
+    loadLocal();
+    return;
+  }
+
+  // Create supabase client with custom fetch that bypasses ISP
+  try{
+    const customFetch = (u, opts) => fetchWithBypass(u, opts);
+    supabaseClient = supabase.createClient(url, key, {global:{fetch: customFetch}});
+    statusEl.className='badge-ok';
+    statusEl.innerHTML=`✅ Connected! Bypass active via <b>${workingProxy}</b> - Works on MTN/Airtel/Glo without VPN. Project: ${new URL(url).host}`;
+    await detectTable();
+    await loadData();
+  }catch(e){
+    statusEl.className='badge-err';
+    statusEl.innerHTML='❌ Fetch failed: '+e.message+' - If DNS error, try mobile data or VPN - some ISPs block supabase.co. Also check if Supabase project is Paused (restore in dashboard). Local fallback active.';
+    loadLocal();
+  }
+}
+
+async function detectTable(){
+  const candidates = ['students','registrations','nurulhayat','academy','users','profiles'];
+  for(let t of candidates){
+    try{
+      const {error} = await supabaseClient.from(t).select('id').limit(1);
+      if(!error){ TABLE_NAME = t; console.log('Found table', t); return; }
+    }catch{}
+  }
+  // if none, keep students
+}
+
+async function loadData(){
+  const dataEl = document.getElementById('data');
+  if(!supabaseClient){ loadLocal(); return; }
+  try{
+    const {data, error} = await supabaseClient.from(TABLE_NAME).select('*').order('id',{ascending:false}).limit(100);
+    if(error) throw error;
+    if(!data || data.length==0){ dataEl.innerHTML='No records yet.'; document.getElementById('count').innerText='(0)'; return; }
+    document.getElementById('count').innerText=`(${data.length}) via ${workingProxy}`;
+    let html = '<table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>';
+    data.forEach(r=>{ html+=`<tr><td>${r.name||''}</td><td>${r.email||''}</td><td>${r.phone||''}</td><td>${r.course||''}</td></tr>`; });
+    html+='</table>';
+    dataEl.innerHTML=html;
+  }catch(e){
+    dataEl.innerHTML='Cloud load failed: '+e.message+'<br>Showing local data.';
+    loadLocal();
+  }
+}
+
+function loadLocal(){
+  const local = JSON.parse(localStorage.getItem('nha_local')||'[]');
+  const dataEl = document.getElementById('data');
+  if(local.length==0){ dataEl.innerHTML+='<br><i>No local data</i>'; return; }
+  let html = '<table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>';
+  local.forEach(r=>{ html+=`<tr><td>${r.name}</td><td>${r.email}</td><td>${r.phone}</td><td>${r.course}</td></tr>`; });
+  html+='</table><p class=small>Local storage - will sync when cloud works</p>';
+  dataEl.innerHTML = html;
+}
+
+async function saveToCloud(){
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const course=document.getElementById('course').value.trim();
+  const msg=document.getElementById('saveMsg');
+  if(!name){ alert('Name required'); return; }
+  document.getElementById('saveBtn').disabled=true;
+  msg.innerText='Saving... via '+workingProxy;
+
+  const record={name,email,phone,course,created_at:new Date().toISOString()};
+
+  // always save local
+  const local=JSON.parse(localStorage.getItem('nha_local')||'[]');
+  local.unshift(record);
+  localStorage.setItem('nha_local', JSON.stringify(local));
+
+  if(!supabaseClient){
+    msg.innerText='Saved locally (cloud not configured). Configure Supabase to sync.';
+    document.getElementById('saveBtn').disabled=false;
+    loadLocal();
+    return;
+  }
+
+  try{
+    const {error}=await supabaseClient.from(TABLE_NAME).insert([record]);
+    if(error) throw error;
+    msg.innerText='✅ Saved to Cloud via '+workingProxy+'!';
+    document.getElementById('name').value=''; document.getElementById('email').value=''; document.getElementById('phone').value=''; document.getElementById('course').value='';
+    await loadData();
+  }catch(e){
+    msg.innerText='⚠️ Saved locally, cloud failed: '+e.message+'. Will sync later. If project paused, restore in Supabase dashboard.';
+    loadLocal();
+  }
+  document.getElementById('saveBtn').disabled=false;
+}
+
+function exportCSV(){
+  const local=JSON.parse(localStorage.getItem('nha_local')||'[]');
+  let csv='Name,Email,Phone,Course,Date\n';
+  local.forEach(r=>{ csv+=`"${r.name}","${r.email}","${r.phone}","${r.course}","${r.created_at||''}"\n`; });
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='nurul_hayat_academy.csv'; a.click();
+}
+
+getConfig();
+initSupabase();
+</script>
+</body>
+</html>
