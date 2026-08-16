@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nurul Hayat Academy</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-50"><div class="bg-indigo-600 text-white p-4 text-center font-bold">Nurul Hayat Academy 2017 | PLAZA CORE FRESH - LIVE DEBUG</div><div class="max-w-4xl mx-auto p-4"><div id="status" class="bg-yellow-100 border-l-4 border-yellow-600 p-4 rounded">Testing connection to https://rltzyqqieonretsocass.supabase.co ...</div><div id="list" class="mt-4 bg-white p-4 rounded shadow">Loading...</div></div><script>
+const URL='https://rltzyqqieonretsocass.supabase.co/rest/v1/students?select=*';
+const KEY='sb_publishable_5XTeRsdLkPNVNxADAvg0pQ_YYR0Mn3e';
+async function load(){
+  try{
+    status.innerHTML='Fetching: '+URL;
+    const res=await fetch(URL,{headers:{apikey:KEY,Authorization:'Bearer '+KEY}});
+    const text=await res.text();
+    if(!res.ok){status.innerHTML='❌ Supabase Error '+res.status+'<br><pre>'+text+'</pre><br><b>If 401 or 403: Run this SQL:</b><br>DROP POLICY IF EXISTS "Allow all" ON students; CREATE POLICY "Allow all" ON students FOR ALL USING (true) WITH CHECK (true);';return;}
+    const data=JSON.parse(text);
+    status.innerHTML='✅ CONNECTED! Found '+data.length+' students';
+    list.innerHTML=data.map(s=>'<div>🎓 <b>'+(s.name||s.id)+'</b> - '+s.course+'</div>').join('');
+  }catch(e){status.innerHTML='❌ JS Error: '+e.message+'<br>'+e.stack;}
+}
+load();
+</script></body></html>
