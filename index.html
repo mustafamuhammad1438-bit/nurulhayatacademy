@@ -3,201 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurul Hayat Academy 2017 | Student Registration - With Background</title>
+<title>Nurul Hayat Academy — Where Every Child's Light Begins to Rise</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}
-body{
-  font-family:'Segoe UI',Arial,sans-serif;
-  margin:0;color:#1e293b;
-  background: linear-gradient(rgba(6,95,70,0.75), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=80');
-  background-size:cover;
-  background-attachment:fixed;
-  background-position:center;
-  min-height:100vh;
+*{box-sizing:border-box}body{margin:0;font-family:'Plus Jakarta Sans',Segoe UI,Arial,sans-serif;color:#0f172a;background:#f8fafc}
+:root{--green:#16a34a;--dark:#065f46}
+.hero{
+  background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80');
+  background-size:cover;background-position:center;
+  color:white;padding:28px 16px 60px;text-align:center;position:relative
 }
-/* If you have your own background in GitHub, replace above url with: ./images/bg.jpg or ./background.jpg */
-.header{
-  background:rgba(22,163,74,0.92);
-  backdrop-filter:blur(6px);
-  color:white;text-align:center;padding:18px 12px;font-weight:900;font-size:23px;
-  position:sticky;top:0;z-index:20;box-shadow:0 4px 12px rgba(0,0,0,.2)
-}
-.sub{font-weight:500;font-size:13px;opacity:.92;margin-top:5px;letter-spacing:.3px}
-.container{max-width:900px;margin:18px auto;padding:0 14px}
-.hero-images{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px
-}
-.hero-images img{
-  width:100%;height:140px;object-fit:cover;border-radius:12px;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,.25)
-}
-@media(max-width:650px){.hero-images{grid-template-columns:1fr 1fr}.hero-images img{height:110px}}
-.card{
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(8px);
-  border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.6)
-}
-h2{margin:0 0 14px;color:#065f46;font-size:19px}
-.label{font-weight:700;font-size:13px;margin:14px 0 6px;display:block;color:#334155}
-.input{width:100%;padding:12px 14px;border:1.8px solid #d9e0ea;border-radius:12px;font-size:15px;outline:none;transition:.2s;background:#fcfdfe}
-.input:focus{border-color:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.15);background:white}
+.nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;color:white;font-weight:800}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;font-size:12px;backdrop-filter:blur(6px)}
+.hero h1{font-size:42px;line-height:1.05;max-width:700px;margin:18px auto 12px;font-weight:800}
+@media(max-width:700px){.hero h1{font-size:28px}}
+.hero p{opacity:.9;max-width:700px;margin:0 auto}
+.btn{padding:12px 18px;border-radius:12px;border:none;font-weight:800;cursor:pointer}
+.btn-white{background:white;color:#0f172a}
+.btn-green{background:var(--green);color:white}
+.section{max-width:1100px;margin:0 auto;padding:28px 16px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+.card{border-radius:18px;padding:18px;background:white;border:1px solid #e2e8f0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.green-card{background:linear-gradient(135deg,var(--green),var(--dark));color:white}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.levels{grid-template-columns:1fr 1fr}}@media(max-width:500px){.levels{grid-template-columns:1fr}}
+.level{border-radius:16px;padding:16px;background:white;border:1px solid #e2e8f0}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gallery img{width:100%;height:200px;object-fit:cover;border-radius:14px;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+@media(max-width:700px){.gallery{grid-template-columns:1fr}.gallery img{height:180px}}
+.input{width:100%;padding:12px 14px;border:1.8px solid #d9e0ea;border-radius:12px;font-size:15px;outline:none}
+.input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(22,163,74,.12)}
 .input.error{border-color:#ef4444;background:#fff5f5}
-.error-msg{color:#ef4444;font-size:12px;margin-top:5px;display:none;font-weight:600}
+.error-msg{color:#ef4444;font-size:12px;display:none;font-weight:700;margin-top:4px}
 .error-msg.show{display:block}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:650px){.grid2{grid-template-columns:1fr}}
-.btn{width:100%;padding:13px 16px;border:none;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer;transition:.2s}
-.btn-green{background:#16a34a;color:white;box-shadow:0 4px 12px rgba(22,163,74,.3)}
-.btn-green:hover{background:#15803d;transform:translateY(-1px)}
-.btn-outline{background:white;border:2px solid #16a34a;color:#16a34a}
-.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800}
-.badge-ok{background:#dcfce7;color:#166534;border:1px solid #86efac}
-.badge-warn{background:#fef9c3;color:#854d0e;border:1px solid #fde68a}
-.audio-box{background:#f0fdf4;border:2px dashed #22c55e;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin:14px 0}
-.stepper{display:flex;gap:8px;margin:14px 0}
-.step{flex:1;height:8px;background:rgba(255,255,255,.6);border-radius:999px;transition:.3s}
-.step.active{background:#16a34a}
-.step.done{background:#4ade80}
+.label{font-weight:700;font-size:13px;margin:12px 0 6px;display:block;color:#334155}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.badge-ok{background:#dcfce7;color:#166534;border:1px solid #86efac;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block}
+.badge-warn{background:#fef9c3;color:#854d0e;border:1px solid #fde68a;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block}
+.audio-box{background:#f0fdf4;border:2px dashed #22c55e;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;margin:12px 0}
+.stepper{display:flex;gap:8px;margin:12px 0}.step{flex:1;height:8px;background:#e5e7eb;border-radius:999px}.step.active{background:var(--green)}.step.done{background:#4ade80}
 .hidden{display:none !important}
-.bank-card{background:linear-gradient(135deg,#16a34a 0%,#065f46 100%);color:white;border-radius:16px;padding:18px;position:relative;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.2)}
-.receipt{border:2px dashed #16a34a;background:#fffffe;padding:18px;border-radius:14px}
-.teller{font-family:'Courier New',monospace;white-space:pre-line;line-height:1.7;font-size:13px;background:#f8fafc;padding:12px;border-radius:8px}
-.khai{font-size:30px;font-weight:900;text-align:center;color:#065f46;margin-top:18px;line-height:1.2;text-shadow:0 1px 0 rgba(0,0,0,.05)}
-.small{font-size:12px;color:#64748b}
-.live{max-height:320px;overflow:auto;border:1px solid #eef2f7;border-radius:12px;padding:10px;background:#fcfdfe}
-.logo{width:80px;height:80px;border-radius:50%;border:3px solid white;box-shadow:0 4px 10px rgba(0,0,0,.2);object-fit:cover}
+.bank{background:linear-gradient(135deg,#16a34a,#065f46);color:white;border-radius:16px;padding:16px}
+.receipt{border:2px dashed var(--green);background:#fffffe;padding:16px;border-radius:14px}
+.teller{font-family:monospace;white-space:pre-line;background:#f8fafc;padding:10px;border-radius:8px;font-size:13px;line-height:1.6}
+.khai{font-size:28px;font-weight:900;text-align:center;color:var(--dark);margin-top:16px}
+.live{max-height:300px;overflow:auto;border:1px solid #eef2f7;border-radius:12px;padding:10px;background:#fcfdfe;font-size:13px}
 </style>
 </head>
 <body>
-<div class="header">
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px">
-    <img class="logo" src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69d98?auto=format&fit=crop&w=200&q=80" alt="Logo" onerror="this.src='https://via.placeholder.com/80?text=NH'">
-    <div>
-      Nurul Hayat Academy 2017
-      <div class="sub">ilimi hasken rayiwa | ✅ Firebase Live - MTN 100% Works</div>
+
+<!-- HERO - ORIGINAL DESIGN RETAINED -->
+<div class="hero">
+  <div class="nav">
+    <div>NURUL HAYAT ACADEMY 2017</div>
+    <div class="badge">Admissions open 2026/2027</div>
+  </div>
+  <div style="margin-top:40px">
+    <div class="badge">Nursery · Islamiyya · Primary · Secondary</div>
+    <h1>Nurul Hayat Academy — Where Every Child's Light Begins to Rise</h1>
+    <p>District Head Street, Jaen, Kano — <b>Nuru</b> means light. <b>Hayat</b> means life. Ilimi hasken rayiwa.</p>
+    <div style="margin-top:18px;display:flex;gap:10px;justify-content:center">
+      <a href="#register"><button class="btn btn-white">📝 Register Now</button></a>
+      <button class="btn" style="background:rgba(0,0,0,.3);color:white;border:1px solid rgba(255,255,255,.4)" onclick="document.getElementById('tour').scrollIntoView({behavior:'smooth'})">Book a Tour</button>
     </div>
   </div>
 </div>
 
-<div class="container">
-
-<!-- RETAINED IMAGES SECTION - Background photo + inside images -->
-<div class="hero-images">
-  <!-- Replace these src with your own GitHub images: ./images/1.jpg etc -->
-  <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" alt="Students" onerror="this.style.display='none'">
-  <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" alt="Class" onerror="this.style.display='none'">
-  <img src="https://images.unsplash.com/photo-1588075592446-265fd1e4e76f?auto=format&fit=crop&w=400&q=80" alt="Quran" onerror="this.style.display='none'">
-</div>
-
-<div class="stepper"><div class="step active" id="s1"></div><div class="step" id="s2"></div><div class="step" id="s3"></div></div>
-
-<!-- WELCOME + STATUS -->
-<div class="card">
-  <div id="status" class="badge-warn">⏳ Connecting to Firebase (Google) - MTN never blocks Google...</div>
-  <div class="audio-box">
-    <button id="welcomePlay" class="btn btn-green" style="width:auto;padding:9px 16px">🔊 Play Welcome AI</button>
-    <div>
-      <strong>Welcome AI Assistant</strong><br>
-      <span class="small">Assalamu Alaikum! Welcome to Nurul Hayat Academy. Background retained!</span>
+<div class="section">
+  <div class="cards">
+    <div class="card green-card">
+      <h3 style="margin:0 0 8px">Nuru — Light of Knowledge</h3>
+      <p style="margin:0;opacity:.9">Strong academics taught by qualified teachers. English, Maths, Science, Islamic values integrated.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px">Hayat — Fullness of Life</h3>
+      <p style="margin:0;color:#475569">Character, faith and wellbeing every day. Discipline, Quran, Adab, and community service.</p>
     </div>
   </div>
 </div>
 
-<!-- PAGE 1 -->
-<div class="card" id="page1">
-  <h2>1️⃣ Student Registration (With Background Retained)</h2>
-  <p class="small">All fields validated, direct to Firestore, background photo stays.</p>
-
-  <label class="label">Student Full Name *</label>
-  <input class="input" id="name" placeholder="e.g. Fatima Muhammad Mustafa">
-  <div class="error-msg" id="err-name">❌ Name min 3 letters</div>
-
-  <div class="grid2">
-    <div>
-      <label class="label">Age *</label>
-      <input class="input" id="age" type="number" min="2" max="25" placeholder="e.g. 7">
-      <div class="error-msg" id="err-age">❌ Age 2-25</div>
-    </div>
-    <div>
-      <label class="label">Class / Level</label>
-      <input class="input" id="classLevel" placeholder="e.g. Primary 2, Tahfiz">
-    </div>
-  </div>
-
-  <label class="label">Guardian / Wali Name *</label>
-  <input class="input" id="guardian" placeholder="e.g. Alhaji Mustafa">
-  <div class="error-msg" id="err-guardian">❌ Guardian min 5 chars</div>
-
-  <label class="label">Guardian Phone *</label>
-  <input class="input" id="phone" placeholder="08066050581">
-  <div class="error-msg" id="err-phone">❌ 11 digits starting with 0</div>
-
-  <label class="label">Health Status *</label>
-  <select class="input" id="health">
-    <option value="">-- Select Health Status --</option>
-    <option>Excellent - No issues</option>
-    <option>Good - Minor allergy</option>
-    <option>Has Asthma - Inhaler needed</option>
-    <option>Physical challenge - Special care</option>
-    <option>Sickling / Chronic - Needs attention</option>
-  </select>
-  <div class="error-msg" id="err-health">❌ Select health status</div>
-
-  <label class="label">Additional Health Note</label>
-  <textarea class="input" id="healthNote" rows="2" placeholder="Allergic to groundnut, O+ ..."></textarea>
-
-  <div style="margin-top:18px">
-    <button class="btn btn-green" id="toPaymentBtn" onclick="validateAndSave()">Save to Firebase & Continue →</button>
-  </div>
-  <div id="saveMsg" class="small" style="margin-top:10px"></div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="card hidden" id="page2">
-  <h2>2️⃣ Bank Transfer Payment</h2>
-  <div class="bank-card">
-    <div style="font-size:12px;opacity:.9">BANK TRANSFER - NURUL HAYAT ACADEMY 2017</div>
-    <div style="font-size:22px;font-weight:900;margin:8px 0">0123456789</div>
-    <div>Bank: <strong>JAIZ Bank Plc</strong></div>
-    <div>Account Name: <strong>Nurul Hayat Academy 2017</strong></div>
-    <div>Amount: <strong>₦5,000</strong></div>
-    <div style="margin-top:10px"><button onclick="copyAcc()" style="border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer">📋 Copy Account</button></div>
-  </div>
-  <label class="label">Transfer Reference *</label>
-  <input class="input" id="payRef" placeholder="e.g. TRF Fatima 080...">
-  <div class="error-msg" id="err-pay">❌ Enter reference</div>
-  <div class="grid2" style="margin-top:16px">
-    <button class="btn btn-outline" onclick="goPage(1)">← Back</button>
-    <button class="btn btn-green" onclick="confirmPayment()">Confirm & Get AI Receipt →</button>
+<div class="section">
+  <div class="levels">
+    <div class="level"><div style="font-size:12px;color:#64748b">Ages 3-5</div><h3 style="margin:6px 0">Nursery</h3><p style="margin:0;font-size:13px;color:#64748b">Early childhood with play & Quran.</p></div>
+    <div class="level"><div style="font-size:12px;color:#64748b">No Limit</div><h3 style="margin:6px 0">Islamiyya</h3><p style="margin:0;font-size:13px;color:#64748b">Tahfiz, Hadith, Fiqh for all ages.</p></div>
+    <div class="level"><div style="font-size:12px;color:#64748b">Ages 6-11</div><h3 style="margin:6px 0">Primary</h3><p style="margin:0;font-size:13px;color:#64748b">Foundation of knowledge & tarbiya.</p></div>
+    <div class="level"><div style="font-size:12px;color:#64748b">Ages 12-17</div><h3 style="margin:6px 0">Secondary</h3><p style="margin:0;font-size:13px;color:#64748b">Preparing leaders with light.</p></div>
   </div>
 </div>
 
-<!-- PAGE 3 -->
-<div class="card hidden" id="page3">
-  <h2>3️⃣ AI Digital Teller Receipt</h2>
-  <div class="receipt">
-    <div style="text-align:center;font-weight:900;font-size:20px;color:#065f46">NURUL HAYAT ACADEMY 2017</div>
-    <div style="text-align:center;font-size:11px;color:#64748b">BACKGROUND RETAINED - AI DIGITAL TELLER</div>
-    <hr style="border:none;border-top:2px dashed #cbd5e1;margin:14px 0">
-    <div class="teller" id="receiptContent">Generating...</div>
-    <hr style="border:none;border-top:2px dashed #cbd5e1;margin:14px 0">
-    <div style="text-align:center">
-      <button id="congratsPlay" class="btn btn-green" style="width:auto;padding:10px 18px">🔊 Play Congratulation AI</button>
+<!-- GALLERY - ORIGINAL IMAGES RETAINED CONCEPT -->
+<div class="section">
+  <h2 style="margin:0 0 12px">Our Pupils & Activities</h2>
+  <div class="gallery">
+    <div><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" alt="Academy Pupils"><div style="font-size:12px;font-weight:700;margin-top:4px;text-align:center">Academy Pupils</div></div>
+    <div><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Well-Wisher"><div style="font-size:12px;font-weight:700;margin-top:4px;text-align:center">Well-Wisher</div></div>
+    <div><img src="https://images.unsplash.com/photo-1588075592446-265fd1e4e76f?auto=format&fit=crop&w=600&q=80" alt="At Kano Zoo"><div style="font-size:12px;font-weight:700;margin-top:4px;text-align:center">At Kano Zoo</div></div>
+  </div>
+  <p style="font-size:11px;color:#64748b;margin-top:8px">Replace these 3 image URLs with your original Netlify images: e.g. ./images/pupils.jpg etc. Your background is retained as hero background.</p>
+</div>
+
+<!-- NEW REGISTRATION SYSTEM WITH AI -->
+<div class="section" id="register">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <h2 style="margin:0;color:var(--dark)">📝 New Student Registration - AI Powered</h2>
+    <span id="status" class="badge-warn">⏳ Connecting Firebase...</span>
+  </div>
+
+  <div class="card">
+    <div class="audio-box">
+      <button id="welcomePlay" class="btn btn-green" style="width:auto;padding:8px 14px">🔊 Welcome AI Audio</button>
+      <div><strong>AI Welcome Voice</strong><div style="font-size:12px;color:#64748b">Assalamu Alaikum! Plays welcome for parent.</div></div>
     </div>
-    <div class="khai">Shukraan<br>Jaza KALLAHU BI KHAIR.. 🤲</div>
-    <div style="text-align:center;margin-top:10px;font-size:13px;font-weight:600">May Allah bless your knowledge journey!</div>
-  </div>
-  <div style="margin-top:18px" class="grid2">
-    <button class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
-    <button class="btn btn-green" onclick="resetAll()">➕ Another Child</button>
-  </div>
-  <div style="margin-top:22px">
-    <h2>📊 Live Students (Firebase)</h2>
-    <div id="liveList" class="live">Loading...</div>
+    <div class="stepper"><div class="step active" id="s1"></div><div class="step" id="s2"></div><div class="step" id="s3"></div></div>
+
+    <!-- PAGE 1 -->
+    <div id="page1">
+      <h3 style="margin:0 0 10px">Student Details (Direct to Database)</h3>
+      <label class="label">Student Full Name *</label>
+      <input class="input" id="name" placeholder="e.g. Fatima Muhammad">
+      <div class="error-msg" id="err-name">Name min 3 letters</div>
+
+      <div class="grid2">
+        <div><label class="label">Age *</label><input class="input" id="age" type="number" min="2" max="25" placeholder="7"><div class="error-msg" id="err-age">Age 2-25</div></div>
+        <div><label class="label">Class / Level</label><input class="input" id="classLevel" placeholder="Primary 2"></div>
+      </div>
+
+      <label class="label">Guardian / Wali Name *</label>
+      <input class="input" id="guardian" placeholder="Alhaji Mustafa">
+      <div class="error-msg" id="err-guardian">Min 5 chars</div>
+
+      <label class="label">Guardian Phone *</label>
+      <input class="input" id="phone" placeholder="08066050581">
+      <div class="error-msg" id="err-phone">11 digits, start 0</div>
+
+      <label class="label">Health Status *</label>
+      <select class="input" id="health">
+        <option value="">-- Select Health Status --</option>
+        <option>Excellent - No issues</option>
+        <option>Good - Minor allergy</option>
+        <option>Has Asthma - Inhaler needed</option>
+        <option>Physical challenge - Special care</option>
+        <option>Sickling / Chronic - Needs attention</option>
+      </select>
+      <div class="error-msg" id="err-health">Select health status</div>
+
+      <label class="label">Health Note</label>
+      <textarea class="input" id="healthNote" rows="2" placeholder="Allergic, medication..."></textarea>
+
+      <div style="margin-top:14px"><button class="btn btn-green" style="width:100%" id="toPayBtn" onclick="validateAndSave()">Save to Database & Continue to Payment →</button></div>
+      <div id="saveMsg" style="font-size:12px;margin-top:8px;color:#475569"></div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="hidden">
+      <h3>Payment - Bank Transfer</h3>
+      <div class="bank">
+        <div style="font-size:12px;opacity:.9">NURUL HAYAT ACADEMY 2017 - BANK TRANSFER</div>
+        <div style="font-size:22px;font-weight:900;margin:6px 0">0123456789</div>
+        <div>Bank: JAIZ Bank Plc</div><div>Account Name: Nurul Hayat Academy 2017</div><div>Amount: ₦5,000 Registration</div>
+        <div style="margin-top:10px"><button onclick="navigator.clipboard.writeText('0123456789');alert('Copied')" style="border:none;padding:6px 10px;border-radius:8px;font-weight:700;cursor:pointer">📋 Copy Account</button></div>
+      </div>
+      <label class="label">Transfer Reference *</label>
+      <input class="input" id="payRef" placeholder="e.g. TRF Fatima 080..."><div class="error-msg" id="err-pay">Enter reference</div>
+      <div class="grid2" style="margin-top:14px"><button class="btn" style="background:#e2e8f0" onclick="goPage(1)">← Back</button><button class="btn btn-green" onclick="confirmPayment()">Confirm & Get AI Receipt →</button></div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="hidden">
+      <h3>AI Digital Teller - Receipt Issued</h3>
+      <div class="receipt">
+        <div style="text-align:center;font-weight:900;color:var(--dark)">NURUL HAYAT ACADEMY 2017</div>
+        <div style="text-align:center;font-size:10px;color:#64748b">AI DIGITAL TELLER - ORIGINAL SITE RETAINED</div>
+        <hr style="border:none;border-top:2px dashed #cbd5e1;margin:12px 0">
+        <div class="teller" id="receiptContent">Generating...</div>
+        <hr style="border:none;border-top:2px dashed #cbd5e1;margin:12px 0">
+        <div style="text-align:center"><button id="congratsPlay" class="btn btn-green" style="width:auto">🔊 Play Congratulation AI Audio</button></div>
+        <div class="khai">Shukraan<br>Jaza KALLAHU BI KHAIR.. 🤲</div>
+      </div>
+      <div class="grid2" style="margin-top:14px"><button class="btn" style="background:#e2e8f0" onclick="window.print()">🖨️ Print</button><button class="btn btn-green" onclick="resetAll()">➕ Register Another</button></div>
+      <div style="margin-top:18px"><h4>Live Students (Firebase)</h4><div id="liveList" class="live">Loading...</div></div>
+    </div>
   </div>
 </div>
 
+<!-- ORIGINAL FOOTER RETAINED -->
+<div class="section" id="tour" style="background:white;border-top:1px solid #e2e8f0;margin-top:20px;border-radius:18px">
+  <h2>Come and see the school.</h2>
+  <p>District Head Street Jaen, Gwale LGA, Kano. 08066050581, 09067411542</p>
+  <div class="card" style="background:#f8fafc">
+    <div style="font-size:12px;color:#64748b">Demo Result Checker (from original site)</div>
+    <div class="grid2" style="margin-top:8px"><input class="input" placeholder="NHA/2024/001"><input class="input" placeholder="1234"></div>
+    <div style="margin-top:8px"><button class="btn btn-green">Check Result (English, Maths, Islamiyya, Total, Position)</button></div>
+  </div>
+  <p style="font-size:13px">Salam! Ask about fees, admission, results. - Management 🤖</p>
 </div>
 
 <script>
@@ -209,36 +210,17 @@ const firebaseConfig = {
   messagingSenderId: "378848485167",
   appId: "1:378848485167:web:8dc6fc48dcfb51475d4bda"
 };
-let db=null;
-try{ firebase.initializeApp(firebaseConfig); db=firebase.firestore(); }catch(e){ console.error(e); }
+let db=null; try{ firebase.initializeApp(firebaseConfig); db=firebase.firestore(); }catch(e){}
 let pendingData=null;
 
-function speak(t){
-  if(!('speechSynthesis' in window)){ alert(t); return; }
-  window.speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.92; u.pitch=1.08;
-  const vs=window.speechSynthesis.getVoices();
-  const f=vs.find(v=>/female|Google UK English Female|Samantha|Zira/i.test(v.name))||vs[0];
-  if(f) u.voice=f;
-  window.speechSynthesis.speak(u);
-}
-document.getElementById('welcomePlay').onclick=()=>{ speak("Assalamu Alaikum wa Rahmatullahi wa Barakatuh! Welcome to Nurul Hayat Academy twenty seventeen. Ilimi hasken rayiwa. Your background photo is retained and beautiful. Please register your child."); };
-document.getElementById('congratsPlay').onclick=()=>{
-  const n=document.getElementById('name').value||'dear student';
-  speak(`Mabrook! Congratulations ${n}! Registration successful at Nurul Hayat Academy! AI digital teller receipt issued with background retained! Shukraan Jaza kallahu bi khair!`);
-};
-function goPage(p){
-  document.getElementById('page1').classList.add('hidden');
-  document.getElementById('page2').classList.add('hidden');
-  document.getElementById('page3').classList.add('hidden');
-  ['s1','s2','s3'].forEach(id=>document.getElementById(id).classList.remove('active'));
-  document.getElementById('page'+p).classList.remove('hidden');
-  document.getElementById('s'+p).classList.add('active');
-  if(p>1) document.getElementById('s'+(p-1)).classList.add('done');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+function speak(t){ if(!('speechSynthesis' in window)){alert(t);return;} window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.92; u.pitch=1.08; const vs=window.speechSynthesis.getVoices(); const f=vs.find(v=>/female|Google UK English Female|Samantha|Zira/i.test(v.name))||vs[0]; if(f) u.voice=f; window.speechSynthesis.speak(u); }
+document.getElementById('welcomePlay').onclick=()=>speak("Assalamu Alaikum wa Rahmatullahi wa Barakatuh! Welcome to Nurul Hayat Academy twenty seventeen, where every child's light begins to rise. Ilimi hasken rayiwa. Please register your child with name, age, guardian, and health status. Data goes directly to our secure database.");
+document.getElementById('congratsPlay').onclick=()=>{ const n=document.getElementById('name').value||'dear student'; speak(`Mabrook Congratulations ${n}! Your registration at Nurul Hayat Academy is successful! Payment received. Your AI digital teller receipt has been issued. Shukraan Jaza kallahu bi khair!`); };
+
+function goPage(p){ document.getElementById('page1').classList.add('hidden'); document.getElementById('page2').classList.add('hidden'); document.getElementById('page3').classList.add('hidden'); ['s1','s2','s3'].forEach(id=>document.getElementById(id).classList.remove('active')); document.getElementById('page'+p).classList.remove('hidden'); document.getElementById('s'+p).classList.add('active'); if(p>1) document.getElementById('s'+(p-1)).classList.add('done'); window.scrollTo({top:0,behavior:'smooth'}); }
 window.goPage=goPage;
 function setErr(id,show){ const inp=document.getElementById(id); const err=document.getElementById('err-'+id); if(inp) inp.classList.toggle('error',show); if(err) err.classList.toggle('show',show); }
+
 window.validateAndSave=async()=>{
   const name=document.getElementById('name').value.trim();
   const age=parseInt(document.getElementById('age').value);
@@ -246,62 +228,47 @@ window.validateAndSave=async()=>{
   const phone=document.getElementById('phone').value.trim();
   const health=document.getElementById('health').value;
   let ok=true;
-  if(name.length<3){ setErr('name',true); ok=false; } else setErr('name',false);
-  if(!(age>=2&&age<=25)){ setErr('age',true); ok=false; } else setErr('age',false);
-  if(guardian.length<5){ setErr('guardian',true); ok=false; } else setErr('guardian',false);
-  if(!/^0\d{10}$/.test(phone)){ setErr('phone',true); ok=false; } else setErr('phone',false);
-  if(!health){ setErr('health',true); ok=false; } else setErr('health',false);
+  if(name.length<3){ setErr('name',true); ok=false;} else setErr('name',false);
+  if(!(age>=2&&age<=25)){ setErr('age',true); ok=false;} else setErr('age',false);
+  if(guardian.length<5){ setErr('guardian',true); ok=false;} else setErr('guardian',false);
+  if(!/^0\d{10}$/.test(phone)){ setErr('phone',true); ok=false;} else setErr('phone',false);
+  if(!health){ setErr('health',true); ok=false;} else setErr('health',false);
   if(!ok){ speak("Please correct highlighted fields."); return; }
-  const btn=document.getElementById('toPaymentBtn'); const msg=document.getElementById('saveMsg');
-  btn.disabled=true; msg.innerHTML='⏳ Saving to Firebase...';
+  const btn=document.getElementById('toPayBtn'); const msg=document.getElementById('saveMsg'); btn.disabled=true; msg.textContent='Saving to Firebase...';
   const data={ name, age, guardian, phone, classLevel:document.getElementById('classLevel').value, health, healthNote:document.getElementById('healthNote').value, created_at:new Date().toISOString(), createdAt: firebase.firestore.FieldValue.serverTimestamp(), paymentStatus:'Pending' };
   const local=JSON.parse(localStorage.getItem('nha_local_v2')||'[]'); local.unshift(data); localStorage.setItem('nha_local_v2', JSON.stringify(local));
-  try{
-    if(!db) throw new Error('Firestore not ready');
-    await db.collection('students').add(data);
-    msg.innerHTML='✅ Saved to Firebase! Background retained!';
-    document.getElementById('status').className='badge-ok'; document.getElementById('status').innerHTML='✅ Firebase Connected! Saved!';
-    pendingData=data; setTimeout(()=>goPage(2),700);
-  }catch(e){ msg.innerHTML='⚠️ Local saved, Firebase err: '+e.message; pendingData=data; setTimeout(()=>goPage(2),900); }
-  btn.disabled=false;
+  try{ if(!db) throw new Error('Firestore not ready'); await db.collection('students').add(data); msg.innerHTML='✅ Saved to Firebase!'; document.getElementById('status').className='badge-ok'; document.getElementById('status').innerHTML=`✅ Firebase Connected!`; pendingData=data; setTimeout(()=>goPage(2),700); }catch(e){ msg.innerHTML='⚠️ Local saved, err: '+e.message; pendingData=data; setTimeout(()=>goPage(2),900); } btn.disabled=false;
 };
-window.copyAcc=()=>{ navigator.clipboard.writeText('0123456789'); alert('Copied: 0123456789'); };
+
 window.confirmPayment=async()=>{
   const payRef=document.getElementById('payRef').value.trim();
-  if(payRef.length<3){ setErr('pay',true); return; } else setErr('pay',false);
+  if(payRef.length<3){ setErr('pay',true); return;} else setErr('pay',false);
   const base=pendingData||{ name:document.getElementById('name').value, age:document.getElementById('age').value, guardian:document.getElementById('guardian').value, phone:document.getElementById('phone').value, health:document.getElementById('health').value };
   const finalData={ ...base, payRef, paymentStatus:'Paid - Bank Transfer', paid_at:new Date().toISOString(), paidAt: firebase.firestore.FieldValue.serverTimestamp() };
   try{ if(db){ await db.collection('students').add(finalData); await db.collection('payments').add(finalData); } }catch(e){}
-  const receiptId='NH17-'+Date.now().toString().slice(-8);
-  const now=new Date().toLocaleString('en-NG');
-  const receipt=`RECEIPT NO: ${receiptId}\nDATE: ${now}\n----------------------------------------\nSTUDENT: ${finalData.name}\nAGE: ${finalData.age}\nGUARDIAN: ${finalData.guardian}\nPHONE: ${finalData.phone}\nHEALTH: ${finalData.health}\n\nPAYMENT\nBank: JAIZ Bank - 0123456789\nAccount: Nurul Hayat Academy 2017\nAmount: ₦5,000\nRef: ${payRef}\nStatus: ✅ CONFIRMED - AI TELLER ISSUED\n\nAI Teller: NH2017\nBackground: Retained ✅\n----------------------------------------`;
+  const receiptId='NH17-'+Date.now().toString().slice(-8); const now=new Date().toLocaleString('en-NG');
+  const receipt=`RECEIPT NO: ${receiptId}\nDATE: ${now}\n----------------------------------------\nSTUDENT: ${finalData.name}\nAGE: ${finalData.age}\nGUARDIAN: ${finalData.guardian}\nPHONE: ${finalData.phone}\nHEALTH: ${finalData.health}\n\nPAYMENT\nBank: JAIZ Bank 0123456789\nAccount: Nurul Hayat Academy 2017\nAmount: ₦5,000\nRef: ${payRef}\nStatus: ✅ CONFIRMED\n\nAI Teller: NH2017 - Original Background Retained\n----------------------------------------`;
   document.getElementById('receiptContent').textContent=receipt;
   goPage(3); loadData();
-  setTimeout(()=>{ speak(`Mabrook Congratulations ${finalData.name}! Payment ${payRef} received. Receipt ${receiptId} issued with background retained. Shukraan Jaza kallahu bi khair!`); },600);
+  setTimeout(()=>speak(`Mabrook Congratulations ${finalData.name}! Payment ${payRef} received. Receipt ${receiptId} issued. Shukraan Jaza kallahu bi khair!`),600);
 };
+
 async function loadData(){
   const list=document.getElementById('liveList'); const status=document.getElementById('status');
-  if(!db){ status.className='badge-warn'; status.innerHTML='⚠️ Firestore not ready'; const local=JSON.parse(localStorage.getItem('nha_local_v2')||'[]'); list.innerHTML=local.map(r=>`<div style="padding:6px;border-bottom:1px solid #f1f5f9"><b>${r.name}</b> | ${r.age}y | ${r.guardian} | ${r.health}</div>`).join('')||'No data'; return; }
+  if(!db){ status.className='badge-warn'; status.innerHTML='⚠️ Firestore not ready'; const local=JSON.parse(localStorage.getItem('nha_local_v2')||'[]'); list.innerHTML=local.map(r=>`<div style="padding:6px;border-bottom:1px solid #f1f5f9"><b>${r.name}</b> | ${r.age}y | ${r.guardian}</div>`).join('')||'No data'; return; }
   try{
     status.className='badge-warn'; status.innerHTML='⏳ Loading...';
     const snap=await db.collection('students').orderBy('created_at','desc').limit(100).get();
     let data=[]; snap.forEach(d=>data.push({id:d.id,...d.data()}));
     const map=new Map(); data.forEach(r=>{ const k=`${r.name}-${r.phone}`.toLowerCase(); if(!map.has(k)) map.set(k,r); });
     const dedup=Array.from(map.values());
-    status.className='badge-ok'; status.innerHTML=`✅ Firebase Connected! ${dedup.length} students - MTN Works! Background Retained!`;
-    list.innerHTML=dedup.map(r=>`<div style="padding:6px;border-bottom:1px solid #f1f5f9"><b>${r.name}</b> | ${r.age}y | Wali: ${r.guardian} | ${r.health} | <span style="color:#16a34a">${r.payRef||''}</span></div>`).join('')||'No students yet';
+    status.className='badge-ok'; status.innerHTML=`✅ Firebase Connected! ${dedup.length} students - MTN Works!`;
+    list.innerHTML=dedup.map(r=>`<div style="padding:6px;border-bottom:1px solid #f1f5f9"><b>${r.name}</b> | ${r.age}y | Wali: ${r.guardian} | ${r.health} | <span style="color:#16a34a">${r.payRef||''}</span></div>`).join('')||'No students';
   }catch(e){ status.className='badge-warn'; status.innerHTML='❌ '+e.message; }
 }
 window.loadData=loadData;
-window.resetAll=()=>{ ['name','age','guardian','phone','classLevel','health','healthNote','payRef'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); document.getElementById('saveMsg').innerHTML=''; goPage(1); speak("Form reset. Register another child. Shukraan Jaza kallahu bi khair!"); };
+window.resetAll=()=>{ ['name','age','guardian','phone','classLevel','health','healthNote','payRef'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); document.getElementById('saveMsg').innerHTML=''; goPage(1); speak("Form reset. Shukraan Jaza kallahu bi khair!"); };
 loadData();
-
-/* HOW TO USE YOUR OWN BACKGROUND PHOTO:
-1. In your GitHub repo, upload your background photo as: background.jpg or images/bg.jpg
-2. Then change line 11 in this file from Unsplash url to: url('./background.jpg') or url('./images/bg.jpg')
-3. Same for hero images: replace Unsplash urls with ./images/1.jpg etc.
-The code already handles it - if your images exist, they will show. If not, Unsplash placeholder shows.
-*/
 </script>
 </body>
 </html>
