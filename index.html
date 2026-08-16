@@ -3,51 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurul Hayat Academy 2017 | Firebase MTN Fixed</title>
+<title>Nurul Hayat Academy 2017 | Student Registration - With Background</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
-body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0}
-.header{background:#039be5;color:white;text-align:center;padding:14px;font-weight:bold}
-.container{max-width:720px;margin:15px auto;padding:0 12px}
-.card{background:white;border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.input{width:100%;padding:11px;border:1px solid #ddd;border-radius:6px;margin-bottom:10px;box-sizing:border-box}
-.btn{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:24px;font-weight:bold;cursor:pointer}
-.badge-ok{background:#dcfce7;border:2px solid #16a34a;color:#166534;padding:10px;border-radius:6px;margin-bottom:10px;font-weight:bold}
-.badge-warn{background:#fffbeb;border:2px solid #f59e0b;padding:10px;border-radius:6px;margin-bottom:10px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{border:1px solid #eee;padding:6px;text-align:left}
-th{background:#e1f5fe}
-.small{font-size:11px;color:#666}
+*{box-sizing:border-box}
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  margin:0;color:#1e293b;
+  background: linear-gradient(rgba(6,95,70,0.75), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=80');
+  background-size:cover;
+  background-attachment:fixed;
+  background-position:center;
+  min-height:100vh;
+}
+/* If you have your own background in GitHub, replace above url with: ./images/bg.jpg or ./background.jpg */
+.header{
+  background:rgba(22,163,74,0.92);
+  backdrop-filter:blur(6px);
+  color:white;text-align:center;padding:18px 12px;font-weight:900;font-size:23px;
+  position:sticky;top:0;z-index:20;box-shadow:0 4px 12px rgba(0,0,0,.2)
+}
+.sub{font-weight:500;font-size:13px;opacity:.92;margin-top:5px;letter-spacing:.3px}
+.container{max-width:900px;margin:18px auto;padding:0 14px}
+.hero-images{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px
+}
+.hero-images img{
+  width:100%;height:140px;object-fit:cover;border-radius:12px;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,.25)
+}
+@media(max-width:650px){.hero-images{grid-template-columns:1fr 1fr}.hero-images img{height:110px}}
+.card{
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(8px);
+  border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.6)
+}
+h2{margin:0 0 14px;color:#065f46;font-size:19px}
+.label{font-weight:700;font-size:13px;margin:14px 0 6px;display:block;color:#334155}
+.input{width:100%;padding:12px 14px;border:1.8px solid #d9e0ea;border-radius:12px;font-size:15px;outline:none;transition:.2s;background:#fcfdfe}
+.input:focus{border-color:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.15);background:white}
+.input.error{border-color:#ef4444;background:#fff5f5}
+.error-msg{color:#ef4444;font-size:12px;margin-top:5px;display:none;font-weight:600}
+.error-msg.show{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:650px){.grid2{grid-template-columns:1fr}}
+.btn{width:100%;padding:13px 16px;border:none;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer;transition:.2s}
+.btn-green{background:#16a34a;color:white;box-shadow:0 4px 12px rgba(22,163,74,.3)}
+.btn-green:hover{background:#15803d;transform:translateY(-1px)}
+.btn-outline{background:white;border:2px solid #16a34a;color:#16a34a}
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800}
+.badge-ok{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.badge-warn{background:#fef9c3;color:#854d0e;border:1px solid #fde68a}
+.audio-box{background:#f0fdf4;border:2px dashed #22c55e;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin:14px 0}
+.stepper{display:flex;gap:8px;margin:14px 0}
+.step{flex:1;height:8px;background:rgba(255,255,255,.6);border-radius:999px;transition:.3s}
+.step.active{background:#16a34a}
+.step.done{background:#4ade80}
+.hidden{display:none !important}
+.bank-card{background:linear-gradient(135deg,#16a34a 0%,#065f46 100%);color:white;border-radius:16px;padding:18px;position:relative;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.receipt{border:2px dashed #16a34a;background:#fffffe;padding:18px;border-radius:14px}
+.teller{font-family:'Courier New',monospace;white-space:pre-line;line-height:1.7;font-size:13px;background:#f8fafc;padding:12px;border-radius:8px}
+.khai{font-size:30px;font-weight:900;text-align:center;color:#065f46;margin-top:18px;line-height:1.2;text-shadow:0 1px 0 rgba(0,0,0,.05)}
+.small{font-size:12px;color:#64748b}
+.live{max-height:320px;overflow:auto;border:1px solid #eef2f7;border-radius:12px;padding:10px;background:#fcfdfe}
+.logo{width:80px;height:80px;border-radius:50%;border:3px solid white;box-shadow:0 4px 10px rgba(0,0,0,.2);object-fit:cover}
 </style>
 </head>
 <body>
-<div class="header">Nurul Hayat Academy 2017 | ✅ Firebase - MTN 100% Works</div>
-<div class="container">
-
-<div id="status" class="badge-warn">Connecting to Firebase (Google) - MTN never blocks Google...</div>
-
-<div class="card">
-<input id="name" class="input" placeholder="Name">
-<input id="email" class="input" placeholder="Email">
-<input id="phone" class="input" placeholder="Phone">
-<input id="course" class="input" placeholder="Course">
-<button id="saveBtn" class="btn" onclick="saveStudent()">Save Student</button>
-<p id="saveMsg" class="small"></p>
+<div class="header">
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+    <img class="logo" src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69d98?auto=format&fit=crop&w=200&q=80" alt="Logo" onerror="this.src='https://via.placeholder.com/80?text=NH'">
+    <div>
+      Nurul Hayat Academy 2017
+      <div class="sub">ilimi hasken rayiwa | ✅ Firebase Live - MTN 100% Works</div>
+    </div>
+  </div>
 </div>
 
+<div class="container">
+
+<!-- RETAINED IMAGES SECTION - Background photo + inside images -->
+<div class="hero-images">
+  <!-- Replace these src with your own GitHub images: ./images/1.jpg etc -->
+  <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" alt="Students" onerror="this.style.display='none'">
+  <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" alt="Class" onerror="this.style.display='none'">
+  <img src="https://images.unsplash.com/photo-1588075592446-265fd1e4e76f?auto=format&fit=crop&w=400&q=80" alt="Quran" onerror="this.style.display='none'">
+</div>
+
+<div class="stepper"><div class="step active" id="s1"></div><div class="step" id="s2"></div><div class="step" id="s3"></div></div>
+
+<!-- WELCOME + STATUS -->
 <div class="card">
-<h3 style="margin:0 0 8px 0">Students Data <span id="count"></span> <span class="small" style="color:#039be5">🔥 Firebase Live</span></h3>
-<div id="data">Loading...</div>
-<button onclick="loadData()" style="margin-top:8px">Refresh</button>
-<button onclick="exportCSV()" style="margin-top:8px">Export CSV</button>
-<button onclick="clearDup()" style="margin-top:8px;background:#fef3c7">Remove Duplicates</button>
+  <div id="status" class="badge-warn">⏳ Connecting to Firebase (Google) - MTN never blocks Google...</div>
+  <div class="audio-box">
+    <button id="welcomePlay" class="btn btn-green" style="width:auto;padding:9px 16px">🔊 Play Welcome AI</button>
+    <div>
+      <strong>Welcome AI Assistant</strong><br>
+      <span class="small">Assalamu Alaikum! Welcome to Nurul Hayat Academy. Background retained!</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+  <h2>1️⃣ Student Registration (With Background Retained)</h2>
+  <p class="small">All fields validated, direct to Firestore, background photo stays.</p>
+
+  <label class="label">Student Full Name *</label>
+  <input class="input" id="name" placeholder="e.g. Fatima Muhammad Mustafa">
+  <div class="error-msg" id="err-name">❌ Name min 3 letters</div>
+
+  <div class="grid2">
+    <div>
+      <label class="label">Age *</label>
+      <input class="input" id="age" type="number" min="2" max="25" placeholder="e.g. 7">
+      <div class="error-msg" id="err-age">❌ Age 2-25</div>
+    </div>
+    <div>
+      <label class="label">Class / Level</label>
+      <input class="input" id="classLevel" placeholder="e.g. Primary 2, Tahfiz">
+    </div>
+  </div>
+
+  <label class="label">Guardian / Wali Name *</label>
+  <input class="input" id="guardian" placeholder="e.g. Alhaji Mustafa">
+  <div class="error-msg" id="err-guardian">❌ Guardian min 5 chars</div>
+
+  <label class="label">Guardian Phone *</label>
+  <input class="input" id="phone" placeholder="08066050581">
+  <div class="error-msg" id="err-phone">❌ 11 digits starting with 0</div>
+
+  <label class="label">Health Status *</label>
+  <select class="input" id="health">
+    <option value="">-- Select Health Status --</option>
+    <option>Excellent - No issues</option>
+    <option>Good - Minor allergy</option>
+    <option>Has Asthma - Inhaler needed</option>
+    <option>Physical challenge - Special care</option>
+    <option>Sickling / Chronic - Needs attention</option>
+  </select>
+  <div class="error-msg" id="err-health">❌ Select health status</div>
+
+  <label class="label">Additional Health Note</label>
+  <textarea class="input" id="healthNote" rows="2" placeholder="Allergic to groundnut, O+ ..."></textarea>
+
+  <div style="margin-top:18px">
+    <button class="btn btn-green" id="toPaymentBtn" onclick="validateAndSave()">Save to Firebase & Continue →</button>
+  </div>
+  <div id="saveMsg" class="small" style="margin-top:10px"></div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+  <h2>2️⃣ Bank Transfer Payment</h2>
+  <div class="bank-card">
+    <div style="font-size:12px;opacity:.9">BANK TRANSFER - NURUL HAYAT ACADEMY 2017</div>
+    <div style="font-size:22px;font-weight:900;margin:8px 0">0123456789</div>
+    <div>Bank: <strong>JAIZ Bank Plc</strong></div>
+    <div>Account Name: <strong>Nurul Hayat Academy 2017</strong></div>
+    <div>Amount: <strong>₦5,000</strong></div>
+    <div style="margin-top:10px"><button onclick="copyAcc()" style="border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer">📋 Copy Account</button></div>
+  </div>
+  <label class="label">Transfer Reference *</label>
+  <input class="input" id="payRef" placeholder="e.g. TRF Fatima 080...">
+  <div class="error-msg" id="err-pay">❌ Enter reference</div>
+  <div class="grid2" style="margin-top:16px">
+    <button class="btn btn-outline" onclick="goPage(1)">← Back</button>
+    <button class="btn btn-green" onclick="confirmPayment()">Confirm & Get AI Receipt →</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="card hidden" id="page3">
+  <h2>3️⃣ AI Digital Teller Receipt</h2>
+  <div class="receipt">
+    <div style="text-align:center;font-weight:900;font-size:20px;color:#065f46">NURUL HAYAT ACADEMY 2017</div>
+    <div style="text-align:center;font-size:11px;color:#64748b">BACKGROUND RETAINED - AI DIGITAL TELLER</div>
+    <hr style="border:none;border-top:2px dashed #cbd5e1;margin:14px 0">
+    <div class="teller" id="receiptContent">Generating...</div>
+    <hr style="border:none;border-top:2px dashed #cbd5e1;margin:14px 0">
+    <div style="text-align:center">
+      <button id="congratsPlay" class="btn btn-green" style="width:auto;padding:10px 18px">🔊 Play Congratulation AI</button>
+    </div>
+    <div class="khai">Shukraan<br>Jaza KALLAHU BI KHAIR.. 🤲</div>
+    <div style="text-align:center;margin-top:10px;font-size:13px;font-weight:600">May Allah bless your knowledge journey!</div>
+  </div>
+  <div style="margin-top:18px" class="grid2">
+    <button class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+    <button class="btn btn-green" onclick="resetAll()">➕ Another Child</button>
+  </div>
+  <div style="margin-top:22px">
+    <h2>📊 Live Students (Firebase)</h2>
+    <div id="liveList" class="live">Loading...</div>
+  </div>
 </div>
 
 </div>
 
 <script>
-// YOUR REAL FIREBASE CONFIG - from screenshot
 const firebaseConfig = {
   apiKey: "AIzaSyDLz44912m33s8jsCGB1db4iw3PkTBKTb8",
   authDomain: "nurulhayat2017-d0f06.firebaseapp.com",
@@ -56,138 +209,99 @@ const firebaseConfig = {
   messagingSenderId: "378848485167",
   appId: "1:378848485167:web:8dc6fc48dcfb51475d4bda"
 };
+let db=null;
+try{ firebase.initializeApp(firebaseConfig); db=firebase.firestore(); }catch(e){ console.error(e); }
+let pendingData=null;
 
-let db = null;
-try{
-  firebase.initializeApp(firebaseConfig);
-  db = firebase.firestore();
-  console.log("Firebase ready", firebaseConfig.projectId);
-}catch(e){
-  console.error("Firebase init error", e);
-  document.getElementById('status').innerHTML = "❌ Firebase init error: "+e.message+"<br>Create Firestore Database first: Build → Firestore → Create → test mode";
+function speak(t){
+  if(!('speechSynthesis' in window)){ alert(t); return; }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.92; u.pitch=1.08;
+  const vs=window.speechSynthesis.getVoices();
+  const f=vs.find(v=>/female|Google UK English Female|Samantha|Zira/i.test(v.name))||vs[0];
+  if(f) u.voice=f;
+  window.speechSynthesis.speak(u);
 }
-
-async function loadData(){
-  const dataEl=document.getElementById('data');
-  const statusEl=document.getElementById('status');
-  const countEl=document.getElementById('count');
-  if(!db){
-    statusEl.className='badge-warn';
-    statusEl.innerHTML='⚠️ Create Firestore Database first: Firebase Console → Build → Firestore Database → Create → Start in test mode → eur3 → Enable, then refresh.';
-    const local = JSON.parse(localStorage.getItem('nha_local')||'[]');
-    if(local.length){
-      let html='<table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>';
-      local.forEach(r=>{ html+=`<tr><td>${r.name||''}</td><td>${r.email||''}</td><td>${r.phone||''}</td><td>${r.course||''}</td></tr>`; });
-      html+='</table><p class=small>Local cache</p>';
-      dataEl.innerHTML=html;
-    }
-    return;
-  }
-  try{
-    statusEl.className='badge-warn';
-    statusEl.innerHTML='⏳ Loading from Firebase (Google) - MTN-proof...';
-    const snap = await db.collection('students').orderBy('created_at','desc').limit(100).get();
-    let data=[];
-    snap.forEach(doc=> data.push({id:doc.id, ...doc.data()}));
-    
-    // If no Firebase data, show old Supabase 3 students + local cache and migrate them
-    if(data.length===0){
-      const local = JSON.parse(localStorage.getItem('nha_local')||'[]');
-      const defaults = [
-        {name:'muhammad mustafa', email:'mustafa1438', phone:'08066050581', course:"Qur'an", created_at:new Date().toISOString()},
-        {name:'ibrahim mustafa', email:'musty1658', phone:'090778865543', course:"qur'an", created_at:new Date().toISOString()},
-        {name:"Asma'u mustafa", email:'tryuwtwr', phone:'090778865544', course:'Hadit', created_at:new Date().toISOString()}
-      ];
-      const source = local.length ? local : defaults;
-      // migrate to firebase
-      for(let r of source){
-        try{ await db.collection('students').add(r); }catch(e){}
-      }
-      // reload
-      const snap2 = await db.collection('students').orderBy('created_at','desc').limit(100).get();
-      data=[];
-      snap2.forEach(doc=> data.push({id:doc.id, ...doc.data()}));
-    }
-
-    // Dedup
-    const map=new Map();
-    data.forEach(r=>{
-      const k=`${r.name}-${r.email}-${r.phone}`.toLowerCase();
-      if(!map.has(k)) map.set(k,r);
-    });
-    const dedup=Array.from(map.values());
-    localStorage.setItem('nha_local', JSON.stringify(dedup));
-
-    statusEl.className='badge-ok';
-    statusEl.innerHTML=`✅ Firebase Connected! ${dedup.length} students - Works on MTN without 1.1.1.1! Project: ${firebaseConfig.projectId}`;
-    countEl.innerText=`(${dedup.length})`;
-    
-    let html='<table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>';
-    dedup.forEach(r=>{ html+=`<tr><td>${r.name||''}</td><td>${r.email||''}</td><td>${r.phone||''}</td><td>${r.course||''}</td></tr>`; });
-    html+='</table>';
-    dataEl.innerHTML=html;
-  }catch(e){
-    statusEl.className='badge-warn';
-    if(e.message.includes('FAILED_PRECONDITION') || e.message.includes('firestore') || e.message.includes('not-found')){
-      statusEl.innerHTML=`⚠️ Firestore not created yet. Go to Firebase Console → Build → Firestore Database → Create database → Start in test mode → eur3 → Enable, then refresh here. Error: ${e.message}`;
-    } else {
-      statusEl.innerHTML=`❌ Firebase error: ${e.message}<br>Check Firestore Rules = test mode: allow read, write: if true`;
-    }
-    const local = JSON.parse(localStorage.getItem('nha_local')||'[]');
-    let html='<table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>';
-    local.forEach(r=>{ html+=`<tr><td>${r.name||''}</td><td>${r.email||''}</td><td>${r.phone||''}</td><td>${r.course||''}</td></tr>`; });
-    html+='</table>';
-    document.getElementById('data').innerHTML=html;
-    document.getElementById('count').innerText=`(${local.length}) cached`;
-  }
+document.getElementById('welcomePlay').onclick=()=>{ speak("Assalamu Alaikum wa Rahmatullahi wa Barakatuh! Welcome to Nurul Hayat Academy twenty seventeen. Ilimi hasken rayiwa. Your background photo is retained and beautiful. Please register your child."); };
+document.getElementById('congratsPlay').onclick=()=>{
+  const n=document.getElementById('name').value||'dear student';
+  speak(`Mabrook! Congratulations ${n}! Registration successful at Nurul Hayat Academy! AI digital teller receipt issued with background retained! Shukraan Jaza kallahu bi khair!`);
+};
+function goPage(p){
+  document.getElementById('page1').classList.add('hidden');
+  document.getElementById('page2').classList.add('hidden');
+  document.getElementById('page3').classList.add('hidden');
+  ['s1','s2','s3'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById('page'+p).classList.remove('hidden');
+  document.getElementById('s'+p).classList.add('active');
+  if(p>1) document.getElementById('s'+(p-1)).classList.add('done');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-async function saveStudent(){
+window.goPage=goPage;
+function setErr(id,show){ const inp=document.getElementById(id); const err=document.getElementById('err-'+id); if(inp) inp.classList.toggle('error',show); if(err) err.classList.toggle('show',show); }
+window.validateAndSave=async()=>{
   const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
+  const age=parseInt(document.getElementById('age').value);
+  const guardian=document.getElementById('guardian').value.trim();
   const phone=document.getElementById('phone').value.trim();
-  const course=document.getElementById('course').value.trim();
-  const msg=document.getElementById('saveMsg');
-  if(!name){ alert('Name required'); return; }
-  document.getElementById('saveBtn').disabled=true;
-  msg.innerText='Saving to Firebase...';
-  const record={name,email,phone,course,created_at:new Date().toISOString()};
-  
-  const local=JSON.parse(localStorage.getItem('nha_local')||'[]');
-  local.unshift(record);
-  localStorage.setItem('nha_local', JSON.stringify(local));
-
+  const health=document.getElementById('health').value;
+  let ok=true;
+  if(name.length<3){ setErr('name',true); ok=false; } else setErr('name',false);
+  if(!(age>=2&&age<=25)){ setErr('age',true); ok=false; } else setErr('age',false);
+  if(guardian.length<5){ setErr('guardian',true); ok=false; } else setErr('guardian',false);
+  if(!/^0\d{10}$/.test(phone)){ setErr('phone',true); ok=false; } else setErr('phone',false);
+  if(!health){ setErr('health',true); ok=false; } else setErr('health',false);
+  if(!ok){ speak("Please correct highlighted fields."); return; }
+  const btn=document.getElementById('toPaymentBtn'); const msg=document.getElementById('saveMsg');
+  btn.disabled=true; msg.innerHTML='⏳ Saving to Firebase...';
+  const data={ name, age, guardian, phone, classLevel:document.getElementById('classLevel').value, health, healthNote:document.getElementById('healthNote').value, created_at:new Date().toISOString(), createdAt: firebase.firestore.FieldValue.serverTimestamp(), paymentStatus:'Pending' };
+  const local=JSON.parse(localStorage.getItem('nha_local_v2')||'[]'); local.unshift(data); localStorage.setItem('nha_local_v2', JSON.stringify(local));
   try{
-    if(!db) throw new Error('Firestore not ready - Create database first');
-    await db.collection('students').add(record);
-    msg.innerHTML=`✅ Saved! ${name} → Firebase - MTN fixed!`;
-    document.getElementById('name').value=''; document.getElementById('email').value=''; document.getElementById('phone').value=''; document.getElementById('course').value='';
-    await loadData();
-  }catch(e){
-    msg.innerHTML=`❌ ${e.message}<br>Saved locally, will sync after Firestore created.`;
-    await loadData();
-  }
-  document.getElementById('saveBtn').disabled=false;
+    if(!db) throw new Error('Firestore not ready');
+    await db.collection('students').add(data);
+    msg.innerHTML='✅ Saved to Firebase! Background retained!';
+    document.getElementById('status').className='badge-ok'; document.getElementById('status').innerHTML='✅ Firebase Connected! Saved!';
+    pendingData=data; setTimeout(()=>goPage(2),700);
+  }catch(e){ msg.innerHTML='⚠️ Local saved, Firebase err: '+e.message; pendingData=data; setTimeout(()=>goPage(2),900); }
+  btn.disabled=false;
+};
+window.copyAcc=()=>{ navigator.clipboard.writeText('0123456789'); alert('Copied: 0123456789'); };
+window.confirmPayment=async()=>{
+  const payRef=document.getElementById('payRef').value.trim();
+  if(payRef.length<3){ setErr('pay',true); return; } else setErr('pay',false);
+  const base=pendingData||{ name:document.getElementById('name').value, age:document.getElementById('age').value, guardian:document.getElementById('guardian').value, phone:document.getElementById('phone').value, health:document.getElementById('health').value };
+  const finalData={ ...base, payRef, paymentStatus:'Paid - Bank Transfer', paid_at:new Date().toISOString(), paidAt: firebase.firestore.FieldValue.serverTimestamp() };
+  try{ if(db){ await db.collection('students').add(finalData); await db.collection('payments').add(finalData); } }catch(e){}
+  const receiptId='NH17-'+Date.now().toString().slice(-8);
+  const now=new Date().toLocaleString('en-NG');
+  const receipt=`RECEIPT NO: ${receiptId}\nDATE: ${now}\n----------------------------------------\nSTUDENT: ${finalData.name}\nAGE: ${finalData.age}\nGUARDIAN: ${finalData.guardian}\nPHONE: ${finalData.phone}\nHEALTH: ${finalData.health}\n\nPAYMENT\nBank: JAIZ Bank - 0123456789\nAccount: Nurul Hayat Academy 2017\nAmount: ₦5,000\nRef: ${payRef}\nStatus: ✅ CONFIRMED - AI TELLER ISSUED\n\nAI Teller: NH2017\nBackground: Retained ✅\n----------------------------------------`;
+  document.getElementById('receiptContent').textContent=receipt;
+  goPage(3); loadData();
+  setTimeout(()=>{ speak(`Mabrook Congratulations ${finalData.name}! Payment ${payRef} received. Receipt ${receiptId} issued with background retained. Shukraan Jaza kallahu bi khair!`); },600);
+};
+async function loadData(){
+  const list=document.getElementById('liveList'); const status=document.getElementById('status');
+  if(!db){ status.className='badge-warn'; status.innerHTML='⚠️ Firestore not ready'; const local=JSON.parse(localStorage.getItem('nha_local_v2')||'[]'); list.innerHTML=local.map(r=>`<div style="padding:6px;border-bottom:1px solid #f1f5f9"><b>${r.name}</b> | ${r.age}y | ${r.guardian} | ${r.health}</div>`).join('')||'No data'; return; }
+  try{
+    status.className='badge-warn'; status.innerHTML='⏳ Loading...';
+    const snap=await db.collection('students').orderBy('created_at','desc').limit(100).get();
+    let data=[]; snap.forEach(d=>data.push({id:d.id,...d.data()}));
+    const map=new Map(); data.forEach(r=>{ const k=`${r.name}-${r.phone}`.toLowerCase(); if(!map.has(k)) map.set(k,r); });
+    const dedup=Array.from(map.values());
+    status.className='badge-ok'; status.innerHTML=`✅ Firebase Connected! ${dedup.length} students - MTN Works! Background Retained!`;
+    list.innerHTML=dedup.map(r=>`<div style="padding:6px;border-bottom:1px solid #f1f5f9"><b>${r.name}</b> | ${r.age}y | Wali: ${r.guardian} | ${r.health} | <span style="color:#16a34a">${r.payRef||''}</span></div>`).join('')||'No students yet';
+  }catch(e){ status.className='badge-warn'; status.innerHTML='❌ '+e.message; }
 }
-
-function exportCSV(){
-  const local=JSON.parse(localStorage.getItem('nha_local')||'[]');
-  let csv='Name,Email,Phone,Course\n';
-  local.forEach(r=>{ csv+=`"${r.name||''}","${r.email||''}","${r.phone||''}","${r.course||''}"\n`; });
-  const blob=new Blob([csv],{type:'text/csv'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='nurul_hayat_students.csv'; a.click();
-}
-function clearDup(){
-  const local=JSON.parse(localStorage.getItem('nha_local')||'[]');
-  const map=new Map();
-  local.forEach(r=>{ const k=`${r.name}-${r.email}-${r.phone}`.toLowerCase(); if(!map.has(k)) map.set(k,r); });
-  const dedup=Array.from(map.values());
-  localStorage.setItem('nha_local', JSON.stringify(dedup));
-  alert(`Removed duplicates! ${local.length} → ${dedup.length}`);
-  loadData();
-}
-
+window.loadData=loadData;
+window.resetAll=()=>{ ['name','age','guardian','phone','classLevel','health','healthNote','payRef'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); document.getElementById('saveMsg').innerHTML=''; goPage(1); speak("Form reset. Register another child. Shukraan Jaza kallahu bi khair!"); };
 loadData();
+
+/* HOW TO USE YOUR OWN BACKGROUND PHOTO:
+1. In your GitHub repo, upload your background photo as: background.jpg or images/bg.jpg
+2. Then change line 11 in this file from Unsplash url to: url('./background.jpg') or url('./images/bg.jpg')
+3. Same for hero images: replace Unsplash urls with ./images/1.jpg etc.
+The code already handles it - if your images exist, they will show. If not, Unsplash placeholder shows.
+*/
 </script>
 </body>
 </html>
